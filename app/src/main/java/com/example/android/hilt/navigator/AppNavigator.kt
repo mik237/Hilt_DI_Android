@@ -16,12 +16,16 @@
 
 package com.example.android.hilt.navigator
 
+import android.app.Activity
+import android.content.Context
+
 /**
  * Available screens.
  */
 enum class Screens {
     BUTTONS,
-    LOGS
+    LOGS,
+    SECOND_ACTIVITY
 }
 
 /**
@@ -29,5 +33,6 @@ enum class Screens {
  */
 interface AppNavigator {
     // Navigate to a given screen.
-    fun navigateTo(screen: Screens)
+    fun navigateToFragment(screen: Screens)
+    fun navigateToActivity(activity: Activity)
 }

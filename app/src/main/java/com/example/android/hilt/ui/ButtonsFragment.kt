@@ -16,6 +16,7 @@
 
 package com.example.android.hilt.ui
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -28,14 +29,17 @@ import com.example.android.hilt.R
 import com.example.android.hilt.data.LoggerLocalDataSource
 import com.example.android.hilt.navigator.AppNavigator
 import com.example.android.hilt.navigator.Screens
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 /**
  * Fragment that displays buttons whose interactions are recorded.
  */
+@AndroidEntryPoint
 class ButtonsFragment : Fragment() {
 
-    private lateinit var logger: LoggerLocalDataSource
-    private lateinit var navigator: AppNavigator
+    @Inject lateinit var logger: LoggerLocalDataSource
+    @Inject lateinit var navigator: AppNavigator
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,16 +52,16 @@ class ButtonsFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        populateFields(context)
+        //populateFields(context)
     }
 
-    private fun populateFields(context: Context) {
+    /*private fun populateFields(context: Context) {
         logger = (context.applicationContext as LogApplication).
             serviceLocator.loggerLocalDataSource
 
         navigator = (context.applicationContext as LogApplication).
             serviceLocator.provideNavigator(activity!!)
-    }
+    }*/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.findViewById<Button>(R.id.button1).setOnClickListener {
@@ -73,11 +77,15 @@ class ButtonsFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.all_logs).setOnClickListener {
-            navigator.navigateTo(Screens.LOGS)
+            navigator.navigateToFragment(Screens.LOGS)
         }
 
         view.findViewById<Button>(R.id.delete_logs).setOnClickListener {
             logger.removeLogs()
+        }
+
+        view.findViewById<Button>(R.id.button_second_activity).setOnClickListener {
+            navigator.navigateToActivity(activity as Activity)
         }
     }
 }

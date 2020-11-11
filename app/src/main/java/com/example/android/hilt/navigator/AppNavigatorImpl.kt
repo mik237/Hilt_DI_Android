@@ -16,25 +16,37 @@
 
 package com.example.android.hilt.navigator
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.util.Log
 import androidx.fragment.app.FragmentActivity
 import com.example.android.hilt.R
 import com.example.android.hilt.ui.ButtonsFragment
 import com.example.android.hilt.ui.LogsFragment
+import com.example.android.hilt.ui.SecondActivity
+import javax.inject.Inject
 
 /**
  * Navigator implementation.
  */
-class AppNavigatorImpl(private val activity: FragmentActivity) : AppNavigator {
+class AppNavigatorImpl @Inject constructor(private val activity: FragmentActivity) : AppNavigator {
 
-    override fun navigateTo(screen: Screens) {
+    override fun navigateToFragment(screen: Screens) {
         val fragment = when (screen) {
             Screens.BUTTONS -> ButtonsFragment()
             Screens.LOGS -> LogsFragment()
+            else-> LogsFragment()
         }
 
         activity.supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, fragment)
             .addToBackStack(fragment::class.java.canonicalName)
             .commit()
+    }
+
+    override fun navigateToActivity(activity: Activity) {
+        val intent = Intent(activity, SecondActivity::class.java)
+        activity.startActivity(intent)
     }
 }

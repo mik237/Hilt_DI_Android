@@ -21,4 +21,5 @@
     <string name="button_3">Button 3</string>
     <string name="see_all_logs">SEE ALL LOGS</string>
     <string name="delete_logs">Delete Logs</string>
+    <string name="launch_second_activity">Launch Second Activity</string>
 </resources>
